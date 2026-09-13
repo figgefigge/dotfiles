@@ -1,0 +1,12 @@
+---
+- name: Install virtualization stack
+  ansible.builtin.dnf:
+    name: "@virtualization"
+    state: present
+
+- name: Add workstation user to libvirt group
+  ansible.builtin.user:
+    name: "{{ workstation_user }}"
+    groups: libvirt
+    append: true
+

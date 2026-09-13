@@ -1,0 +1,14 @@
+---
+# https://codeberg.org/danielfm/ansible-collections-workstation/src/branch/main/roles/gnome/tasks
+# GNOME
+
+- name: Ensure dconf packages are installed
+  become: true
+  ansible.builtin.dnf:
+    state: present
+    name:
+      - dconf
+      - python3-psutil
+  tags:
+    - pkg
+

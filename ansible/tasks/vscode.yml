@@ -1,0 +1,23 @@
+---
+- name: Add Microsoft VS Code repository
+  ansible.builtin.get_url:
+    url: https://packages.microsoft.com/yumrepos/vscode/config.repo
+    dest: /etc/yum.repos.d/vscode.repo
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install VS Code
+  ansible.builtin.dnf:
+    name: code
+    state: present
+
+- name: Install VS Code extensions
+  become: false
+  ansible.builtin.command:
+    cmd: "code --install-extension {{ item }}"
+  loop: "{{ vscode_extensions }}"
+  when: vscode_extensions | length > 0
+  register: vscode_extension_install
+  changed_when: "'was successfully installed' in vscode_extension_install.stdout"
+

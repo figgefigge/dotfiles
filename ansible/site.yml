@@ -3,119 +3,37 @@
   hosts: workstation
   become: true
 
-  vars:
-    workstation_user: figge
-
-    packages:
-      - fzf
-      - ripgrep
-      - neovim
-      - kitty
-      - zsh
-      - git
-      - htop
-      - btop
-      - iotop
-
-    flatpaks:
-      - org.strawberrymusicplayer.strawberry
-      - de.haeckerfelix.Shortwave
-      - org.videolan.VLC
-
-    fonts:
-      - adobe-source-code-pro-fonts
-      - adobe-source-sans-pro-fonts
-      - adobe-source-serif-pro-fonts
-      - dejavu-fonts-all
-      - fira-code-fonts
-      - google-noto-fonts-common
-      - google-roboto-fonts
-      - ibm-plex-mono-fonts
-      - jetbrains-mono-fonts
-      - redhat-display-fonts
-      - redhat-mono-fonts
-      - redhat-text-fonts
+  vars_files:
+    - vars.yml
 
   tasks:
+    - name: Base
+      ansible.builtin.include_tasks:
+        file: tasks/base.yml
 
-    # ─────────────────────────────
-    # Packages
-    # ─────────────────────────────
+    - name: Security
+      ansible.builtin.include_tasks:
+        file: tasks/security.yml
 
-    - name: Install workstation packages
-      ansible.builtin.dnf:
-        name: "{{ packages }}"
-        state: present
+    - name: Desktop
+      ansible.builtin.include_tasks:
+        file: tasks/desktop.yml
 
-    # ─────────────────────────────
-    # Fonts
-    # ─────────────────────────────
+    - name: VS Code
+      ansible.builtin.include_tasks:
+        file: tasks/vscode.yml
 
-    - name: Install font packages
-      ansible.builtin.dnf:
-        name: "{{ fonts }}"
-        state: present
+    - name: Virtualization
+      ansible.builtin.include_tasks:
+        file: tasks/virtualization.yml
 
-    # ─────────────────────────────
-    # USBGuard
-    # ─────────────────────────────
+    - name: Flatpak
+      ansible.builtin.include_tasks:
+        file: tasks/flatpak.yml
 
-    - name: Install USBGuard
-      ansible.builtin.dnf:
-        name:
-          - usbguard
-          - usbguard-notifier
-          - usbguard-selinux
-        state: present
 
-    # ─────────────────────────────
-    # TPM2
-    # ─────────────────────────────
-
-    - name: Install TPM2 packages
-      ansible.builtin.dnf:
-        name:
-          - clevis
-          - clevis-luks
-          - clevis-dracut
-          - clevis-systemd
-          - clevis-udisks2
-          - tpm2-tools
-        state: present
-
-    # ─────────────────────────────
-    # Virtualization
-    # ─────────────────────────────
-
-    - name: Install virtualization stack
-      ansible.builtin.dnf:
-        name: "@virtualization"
-        state: present
-
-    - name: Add user to libvirt group
-      ansible.builtin.user:
-        name: "{{ workstation_user }}"
-        groups: libvirt
-        append: true
-
-    # ─────────────────────────────
-    # Flatpaks
-    # ─────────────────────────────
-
-    - name: Install Flatpak
-      ansible.builtin.dnf:
-        name: flatpak
-        state: present
-
-    - name: Add Flathub
-      community.general.flatpak_remote:
-        name: flathub
-        state: present
-        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-
-    - name: Install Flatpak applications
-      community.general.flatpak:
-        name: "{{ flatpaks }}"
-        state: present
-        remote: flathub
-
+  handlers:
+    - name: restart usbguard
+      ansible.builtin.systemd:
+        name: usbguard
+        state: restarted
