@@ -1,3 +1,4 @@
+rpmfusion_fedora_version: 44
 rpmfusion_packages:
   - intel-media-driver
   - libva-nvidia-driver
