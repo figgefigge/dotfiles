@@ -1,9 +1,27 @@
 ---
+- name: Ensure distribution-gpg-keys is installed
+  ansible.builtin.package:
+    name: distribution-gpg-keys
+    state: present
+  become: true
+
+- name: Import RPM Fusion Free GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: "/usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-{{ rpmfusion_fedora_version }}"
+  become: true
+
+- name: Import RPM Fusion Nonfree GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: "/usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-{{ rpmfusion_fedora_version }}"
+  become: true
+
 - name: Installera RPM Fusion (Free och Nonfree)
   ansible.builtin.dnf:
     name:
-      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm"
-      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version }}.noarch.rpm"
+      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ rpmfusion_fedora_version }}.noarch.rpm"
+      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ rpmfusion_fedora_version }}.noarch.rpm"
     state: present
   become: true
 
