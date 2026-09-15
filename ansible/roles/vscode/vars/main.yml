@@ -1,0 +1,12 @@
+---
+vscode_extensions:
+  - redhat.ansible
+  - formulahendry.auto-rename-tag
+  - oderwat.indent-rainbow
+  - esbenp.prettier-vscode
+  - ms-vscode-remote.remote-ssh
+  - svelte.svelte-vscode
+  - bradlc.vscode-tailwindcss
+  - vscodevim.vim
+  - redhat.vscode-xml
+  - redhat.vscode-yaml

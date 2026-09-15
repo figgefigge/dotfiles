@@ -1,0 +1,30 @@
+---
+base_timezone: Europe/Stockholm
+base_workstation_user: figge
+base_workstation_hostname: laptop
+base_packages:
+  - fzf
+  - ripgrep
+  - rsync
+  - lsd
+  - neovim
+  - zsh
+  - git
+  - htop
+  - btop
+  - iotop
+  - nmap
+  - arp-scan
+  - ansible
+  - arp-scan
+  - bat
+  - btop
+  - dnf-utils
+  - rclone
+  - nethogs
+  - nvtop
+  - sysstat
+  - zoxide
+  - whois
+  - kitty
+  - wireshark

@@ -6,34 +6,11 @@
   vars_files:
     - vars.yml
 
-  tasks:
-    - name: Base
-      ansible.builtin.include_tasks:
-        file: tasks/base.yml
-
-    - name: Security
-      ansible.builtin.include_tasks:
-        file: tasks/security.yml
-
-    - name: Desktop
-      ansible.builtin.include_tasks:
-        file: tasks/desktop.yml
-
-    - name: VS Code
-      ansible.builtin.include_tasks:
-        file: tasks/vscode.yml
-
-    - name: Virtualization
-      ansible.builtin.include_tasks:
-        file: tasks/virtualization.yml
-
-    - name: Flatpak
-      ansible.builtin.include_tasks:
-        file: tasks/flatpak.yml
-
-
-  handlers:
-    - name: restart usbguard
-      ansible.builtin.systemd:
-        name: usbguard
-        state: restarted
+  roles:
+    - base
+    - security
+    - gnome
+    - rpmfusion
+    - flatpak
+    - vscode
+    - virtualization

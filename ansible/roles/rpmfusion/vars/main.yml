@@ -1,0 +1,8 @@
+rpmfusion_packages:
+  - intel-media-driver
+  - libva-nvidia-driver
+  - gstreamer1-plugins-bad-freeworld
+  - gstreamer1-plugins-ugly
+  - libavcodec-freeworld
+  - libheif-freeworld
+  - motion

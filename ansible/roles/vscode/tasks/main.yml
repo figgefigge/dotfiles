@@ -20,4 +20,3 @@
   when: vscode_extensions | length > 0
   register: vscode_extension_install
   changed_when: "'was successfully installed' in vscode_extension_install.stdout"
-

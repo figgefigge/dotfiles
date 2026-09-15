@@ -1,0 +1,19 @@
+gnome_packages:
+  - papirus-icon-theme
+  - gnome-tweaks
+gnome_extensions:
+  - clipboard-indicator@tudmotu.com
+  - tophat@fflewddur.github.io
+gnome_fonts:
+  - adobe-source-code-pro-fonts
+  - adobe-source-sans-pro-fonts
+  - adobe-source-serif-pro-fonts
+  - dejavu-fonts-all
+  - fira-code-fonts
+  - google-noto-fonts-common
+  - google-roboto-fonts
+  - ibm-plex-mono-fonts
+  - jetbrains-mono-fonts
+  - redhat-display-fonts
+  - redhat-mono-fonts
+  - redhat-text-fonts

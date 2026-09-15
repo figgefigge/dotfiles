@@ -1,0 +1,5 @@
+---
+- name: Install virtualization stack
+  ansible.builtin.dnf:
+    name: "@virtualization"
+    state: present

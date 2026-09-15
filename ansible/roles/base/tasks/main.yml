@@ -1,0 +1,13 @@
+---
+- name: Configure timezone
+  community.general.timezone:
+    name: "{{ base_timezone }}"
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ base_workstation_hostname }}"
+
+- name: Install system packages
+  ansible.builtin.dnf:
+    name: "{{ base_packages }}"
+    state: present

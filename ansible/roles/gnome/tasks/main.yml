@@ -12,3 +12,12 @@
   tags:
     - pkg
 
+- name: Install desktop packages
+  ansible.builtin.dnf:
+    name: "{{ gnome_packages }}"
+    state: present
+
+- name: Install fonts
+  ansible.builtin.dnf:
+    name: "{{ gnome_fonts }}"
+    state: present
