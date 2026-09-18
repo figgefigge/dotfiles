@@ -1,0 +1,5 @@
+Host github.com
+	User git
+	Hostname github.com
+	IdentityFile /home/figge/.ssh/id_ed25519_sk_rk_github
+	IdentityAgent none
