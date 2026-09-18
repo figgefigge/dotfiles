@@ -109,7 +109,7 @@
     cmd: firewall-cmd --set-default-zone=public
   changed_when: false
 
-- name: Ensure firewalld is enabled and running:w
+- name: Ensure firewalld is enabled and running
   ansible.builtin.systemd:
     name: firewalld
     enabled: true

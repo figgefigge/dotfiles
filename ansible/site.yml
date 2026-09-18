@@ -8,9 +8,9 @@
 
   roles:
     - base
-    - security
+#   - security
     - gnome
-    - rpmfusion
+#   - rpmfusion
     - flatpak
     - vscode
     - virtualization

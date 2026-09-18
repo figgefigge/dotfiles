@@ -1,0 +1,9 @@
+---
+# https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/configuring-automated-unlocking-of-encrypted-volumes-using-policy-based-decryption_security-hardening#configuring-manual-enrollment-of-volumes-using-tpm2_configuring-automated-unlocking-of-encrypted-volumes-using-policy-based-decryption
+
+- name: Ensure usbguard is installed
+  ansible.builtin.dnf:
+    name: 
+      - usbguard
+      - usbguard-selinux
+      - usbguard-notifier

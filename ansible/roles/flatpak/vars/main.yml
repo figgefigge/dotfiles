@@ -40,4 +40,3 @@ flatpak_packages:
   - org.gnome.design.Contrast
   - org.gustavoperedo.FontDownloader
   - re.sonny.Junction
-  - org.qgis.qgis

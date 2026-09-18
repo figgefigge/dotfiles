@@ -15,8 +15,6 @@ base_packages:
   - iotop
   - nmap
   - arp-scan
-  - ansible
-  - arp-scan
   - bat
   - btop
   - dnf-utils
@@ -27,4 +25,3 @@ base_packages:
   - zoxide
   - whois
   - kitty
-  - wireshark
