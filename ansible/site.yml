@@ -8,7 +8,7 @@
 
   roles:
     - base
-#   - security
+    - security
     - gnome
 #   - rpmfusion
     - flatpak

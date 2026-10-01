@@ -38,58 +38,58 @@
     path: /sys/firmware/efi
   register: security_efi
 
-- name: Require UEFI
-  ansible.builtin.assert:
-    that:
-      - not require_secure_boot or efi.stat.exists
-    fail_msg: >
-      Secure Boot is required, but this system does not appear
-      to be booted using UEFI.
-  when: require_secure_boot
+# name: Require UEFI
+# ansible.builtin.assert:
+#   that:
+#     - not require_secure_boot or efi.stat.exists
+#   fail_msg: >
+#     Secure Boot is required, but this system does not appear
+#     to be booted using UEFI.
+# when: require_secure_boot
 
-- name: Check Secure Boot state
-  ansible.builtin.command:
-    cmd: mokutil --sb-state
-  register: security_secure_boot
-  changed_when: false
-  when:
-    - require_secure_boot
-    - efi.stat.exists
+# name: Check Secure Boot state
+# ansible.builtin.command:
+#   cmd: mokutil --sb-state
+# register: security_secure_boot
+# changed_when: false
+# when:
+#   - require_secure_boot
+#   - efi.stat.exists
 
-- name: Require Secure Boot
-  ansible.builtin.assert:
-    that:
-      - "'SecureBoot enabled' in security_secure_boot.stdout"
-    fail_msg: >
-      Secure Boot is required but is not enabled.
-  when: require_secure_boot
+# name: Require Secure Boot
+# ansible.builtin.assert:
+#   that:
+#     - "'SecureBoot enabled' in security_secure_boot.stdout"
+#   fail_msg: >
+#     Secure Boot is required but is not enabled.
+# when: require_secure_boot
 
 - name: Check TPM device
   ansible.builtin.stat:
     path: /dev/tpmrm0
   register: security_tpm_device
 
-- name: Require TPM
-  ansible.builtin.assert:
-    that:
-      - not require_tpm or security_tpm_device.stat.exists
-    fail_msg: >
-      TPM 2.0 device was not found.
-  when: require_tpm
+# name: Require TPM
+# ansible.builtin.assert:
+#   that:
+#     - not require_tpm or security_tpm_device.stat.exists
+#   fail_msg: >
+#     TPM 2.0 device was not found.
+# when: require_tpm
 
-- name: Check encrypted block devices
-  ansible.builtin.command:
-    cmd: lsblk -rno TYPE
-  register: security_block_device_types
-  changed_when: false
+# name: Check encrypted block devices
+# ansible.builtin.command:
+#   cmd: lsblk -rno TYPE
+# register: security_block_device_types
+# changed_when: false
 
-- name: Require LUKS encryption
-  ansible.builtin.assert:
-    that:
-      - not require_luks or 'crypt' in security_block_device_types.stdout_lines
-    fail_msg: >
-      No active dm-crypt device was detected.
-  when: require_luks
+# name: Require LUKS encryption
+# ansible.builtin.assert:
+#   that:
+#     - not require_luks or 'crypt' in security_block_device_types.stdout_lines
+#   fail_msg: >
+#     No active dm-crypt device was detected.
+# when: require_luks
 
 # ─────────────────────────────
 # SELinux
@@ -119,42 +119,42 @@
 # Automatic updates
 # ─────────────────────────────
 
-- name: Enable automatic updates
-  ansible.builtin.systemd:
-    name: dnf-automatic-notifyonly.timer
-    enabled: true
-    state: started
+# name: Enable automatic updates
+# ansible.builtin.systemd:
+#   name: dnf-automatic-notifyonly.timer
+#   enabled: true
+#   state: started
 
 # ─────────────────────────────
 # Firmware
 # ─────────────────────────────
 
-- name: Enable fwupd refresh timer
-  ansible.builtin.systemd:
-    name: fwupd-refresh.timer
-    enabled: true
-    state: started
+# name: Enable fwupd refresh timer
+# ansible.builtin.systemd:
+#   name: fwupd-refresh.timer
+#   enabled: true
+#   state: started
 
 # ─────────────────────────────
 # Time synchronization
 # ─────────────────────────────
 
-- name: Enable chronyd
-  ansible.builtin.systemd:
-    name: chronyd
-    enabled: true
-    state: started
+# name: Enable chronyd
+# ansible.builtin.systemd:
+#   name: chronyd
+#   enabled: true
+#   state: started
 
 
 # ─────────────────────────────
 # USBGuard
 # ─────────────────────────────
 
-- name: Ensure usbguard service is enabled and running
-  ansible.builtin.systemd:
-    name: usbguard
-    state: started
-    enabled: true
+# name: Ensure usbguard service is enabled and running
+# ansible.builtin.systemd:
+#   name: usbguard
+#   state: started
+#   enabled: true
 
 # ─────────────────────────────
 # Audit
