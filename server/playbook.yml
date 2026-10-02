@@ -1,0 +1,112 @@
+---
+- name: Konfigurera Debian-server med Tailscale, UFW och SSH-nycklar
+  hosts: debian_servers
+  become: yes
+  vars_files:
+    - vars/secret.yml
+
+  tasks:
+    - name: Uppdatera paketlistor
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Installera beroenden, Tailscale och UFW
+      apt:
+        name:
+          - curl
+          - gnupg
+          - apt-transport-https
+          - ufw
+          - iptables
+        state: present
+
+    - name: Lägg till Tailscales GPG-nyckel
+      shell: |
+        curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+      args:
+        creates: /usr/share/keyrings/tailscale-archive-keyring.gpg
+
+    - name: Lägg till Tailscale-repository
+      shell: |
+        echo "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian bookworm main" | tee /etc/apt/sources.list.d/tailscale.list
+      args:
+        creates: /etc/apt/sources.list.d/tailscale.list
+
+    - name: Installera Tailscale
+      apt:
+        name: tailscale
+        update_cache: yes
+        state: present
+
+    - name: Starta och aktivera Tailscale-tjänsten
+      systemd:
+        name: tailscaled
+        state: started
+        enabled: yes
+
+    - name: Anslut till Tailscale-nätverket
+      command: tailscale up --authkey={{ tailscale_authkey }} --ssh
+      register: tailscale_result
+      changed_when: "'Logged in' in tailscale_result.stdout"
+      failed_when: 
+        - tailscale_result.rc != 0
+        - "'Device already logged in' not in tailscale_result.stderr"
+
+    - name: Skapa en standardanvändare (om den inte finns)
+      user:
+        name: debian
+        shell: /bin/bash
+        create_home: yes
+        groups: sudo
+        append: yes
+
+    - name: Lägg till SSH-publika nyckeln för användaren
+      authorized_key:
+        user: debian
+        state: present
+        key: "{{ ssh_public_key }}"
+
+    - name: Säkra SSH-konfigurationen (Inaktivera lösenordsinloggning)
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      loop:
+        - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+        - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin prohibit-password' }
+      notify: Starta om SSH
+
+    # --- UFW BRANDVÄGGSKONFIGURATION ---
+    - name: Sätt standardregler för UFW (Neka inkommande, tillåt utgående)
+      ufw:
+        direction: incoming
+        policy: deny
+
+    - name: Sätt standardpolicy för utgående trafik
+      ufw:
+        direction: outgoing
+        policy: allow
+
+    - name: Tillåt all trafik över Tailscale-gränssnittet (tailscale0)
+      ufw:
+        rule: allow
+        interface: tailscale0
+        direction: in
+
+    - name: Tillåt standard SSH (port 22) externt (valfritt, ta bort om du bara vill köra via Tailscale)
+      ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
+
+    - name: Aktivera UFW och tänd den
+      ufw:
+        state: enabled
+
+  handlers:
+    - name: Starta om SSH
+      service:
+        name: ssh
+        state: restarted
