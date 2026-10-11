@@ -40,3 +40,11 @@ flatpak_packages:
   - org.gnome.design.Contrast
   - org.gustavoperedo.FontDownloader
   - re.sonny.Junction
+  - org.jellyfin.JellyfinServer
+  - org.telegram.desktop
+  - org.signal.Signal
+  - com.protonvpn.www
+  - io.github.kolunmi.Bazaar
+  - com.bitwarden.desktop
+  - net.mkiol.SpeechNote
+  - io.gitlab.theevilskeleton.Upscaler

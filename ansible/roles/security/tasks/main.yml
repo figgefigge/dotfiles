@@ -16,9 +16,6 @@
       - audit
       - audit-rules
       - chrony
-      - usbguard
-      - usbguard-notifier
-      - usbguard-selinux
       - clevis
       - clevis-luks
       - clevis-dracut
@@ -27,6 +24,10 @@
       - tpm2-tools
       - fido2-tools
       - libfido2
+      - usbguard
+      - usbguard-selinux
+      - usbguard-notifier
+      - usbguard-dbus
     state: present
 
 # ─────────────────────────────

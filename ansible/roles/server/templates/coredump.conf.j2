@@ -1,0 +1,4 @@
+# See coredump.conf(5) for details
+[Coredump]
+Storage={{ 'external' if server_enable_coredumps else 'none' }}
+ProcessSizeMax={{ '1G' if server_enable_coredumps else '0' }}

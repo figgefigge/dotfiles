@@ -1,6 +1,6 @@
 ---
 base_timezone: Europe/Stockholm
-base_workstation_user: figge
+base_workstation_user: fredric
 base_workstation_hostname: laptop
 base_packages:
   - fzf

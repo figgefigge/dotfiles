@@ -1,0 +1,43 @@
+---
+- name: Configure system sleep and power management states
+  block:
+    - name: Mask sleep and suspend targets in systemd
+      systemd:
+        name: "{{ item }}"
+        masked: "{{ not server_enable_sleep }}"
+      loop:
+        - sleep.target
+        - suspend.target
+        - hibernate.target
+        - hybrid-sleep.target
+      notify: Reload systemd
+  tags: [power, systemd]
+
+- name: Configure systemd coredump settings
+  block:
+    - name: Template coredump.conf
+      template:
+        src: coredump.conf.j2
+        dest: /etc/systemd/coredump.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload systemd
+
+    - name: Disable apport or kernel crash handlers if applicable
+      service:
+        name: apport
+        state: stopped
+        enabled: false
+      failed_when: false
+  tags: [coredump, security, systemd]
+
+- name: Apply sysctl server hardening parameters
+  template:
+    src: 99-sysctl-hardening.conf.j2
+    dest: /etc/sysctl.d/99-sysctl-hardening.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload sysctl
+  tags: [sysctl, security]

@@ -1,0 +1,11 @@
+# Kernel hardening and server optimizations
+# Managed by Ansible
+
+# Disable Magic SysRq key for security (optional, set to 1 if needed for debugging)
+kernel.sysrq = 0
+
+# Restrict core dump readability
+fs.suid_dumpable = 0
+
+# Increase maximum number of open files
+fs.file-max = 2097152

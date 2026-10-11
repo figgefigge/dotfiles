@@ -9,6 +9,7 @@
   roles:
     - base
     - security
+#   - server
     - gnome
 #   - rpmfusion
     - flatpak

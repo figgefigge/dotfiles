@@ -1,0 +1,6 @@
+---
+# Enable or disable system sleep/suspend states
+server_enable_sleep: false
+
+# Enable or disable coredumps system-wide
+server_enable_coredumps: false

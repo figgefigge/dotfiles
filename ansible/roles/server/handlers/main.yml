@@ -1,0 +1,13 @@
+---
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+
+- name: Reload sysctl
+  command: sysctl --system
+
+- name: Restart systemd-coredump
+  service:
+    name: systemd-coredump
+    state: restarted
+  ignore_errors: true
