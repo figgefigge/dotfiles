@@ -1,0 +1,37 @@
+---
+- name: Add Tailscale repository on Fedora
+  ansible.builtin.get_url:
+    url: https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    dest: /etc/yum.repos.d/tailscale.repo
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Install Tailscale signing key on Debian
+  ansible.builtin.get_url:
+    url: "https://pkgs.tailscale.com/stable/debian/{{ ansible_facts['distribution_release'] }}.noarmor.gpg"
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts['distribution'] == 'Debian'
+
+- name: Add Tailscale repository on Debian
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian {{ ansible_facts['distribution_release'] }} main"
+    filename: tailscale
+    state: present
+    update_cache: true
+  when: ansible_facts['distribution'] == 'Debian'
+
+- name: Install Tailscale
+  ansible.builtin.package:
+    name: tailscale
+    state: present
+
+- name: Enable and start Tailscale daemon
+  ansible.builtin.service:
+    name: tailscaled
+    enabled: true
+    state: started
