@@ -4,20 +4,22 @@
 
 - name: Ensure dconf packages are installed
   become: true
-  ansible.builtin.dnf:
+  ansible.builtin.package:
     state: present
-    name:
-      - dconf
-      - python3-psutil
+    name: "{{ gnome_dconf_packages }}"
+  vars:
+    gnome_dconf_packages: >-
+      {{ ['dconf', 'python3-psutil'] if ansible_facts['os_family'] == 'RedHat'
+         else ['dconf-cli', 'python3-psutil'] }}
   tags:
     - pkg
 
 - name: Install desktop packages
-  ansible.builtin.dnf:
-    name: "{{ gnome_packages }}"
+  ansible.builtin.package:
+    name: "{{ gnome_debian_packages if ansible_facts['os_family'] == 'Debian' else gnome_packages }}"
     state: present
 
 - name: Install fonts
-  ansible.builtin.dnf:
-    name: "{{ gnome_fonts }}"
+  ansible.builtin.package:
+    name: "{{ gnome_debian_fonts if ansible_facts['os_family'] == 'Debian' else gnome_fonts }}"
     state: present

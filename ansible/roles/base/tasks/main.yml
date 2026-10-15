@@ -7,7 +7,13 @@
   ansible.builtin.hostname:
     name: "{{ base_workstation_hostname }}"
 
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_facts['os_family'] == 'Debian'
+
 - name: Install system packages
-  ansible.builtin.dnf:
-    name: "{{ base_packages }}"
+  ansible.builtin.package:
+    name: "{{ base_packages + (base_fedora_packages if ansible_facts['os_family'] == 'RedHat' else []) }}"
     state: present

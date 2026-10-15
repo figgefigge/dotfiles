@@ -6,9 +6,27 @@
     owner: root
     group: root
     mode: "0644"
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Add Microsoft signing key for VS Code on Debian
+  ansible.builtin.get_url:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: /etc/apt/trusted.gpg.d/microsoft.asc
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Add Microsoft VS Code repository on Debian
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/code stable main"
+    filename: vscode
+    state: present
+    update_cache: true
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install VS Code
-  ansible.builtin.dnf:
+  ansible.builtin.package:
     name: code
     state: present
 

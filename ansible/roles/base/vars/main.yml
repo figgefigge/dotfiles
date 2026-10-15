@@ -17,7 +17,6 @@ base_packages:
   - arp-scan
   - bat
   - btop
-  - dnf-utils
   - rclone
   - nethogs
   - nvtop
@@ -26,3 +25,5 @@ base_packages:
   - whois
   - kitty
   - aria2
+base_fedora_packages:
+  - dnf-utils

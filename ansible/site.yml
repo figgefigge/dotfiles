@@ -1,5 +1,5 @@
 ---
-- name: Configure Fedora workstation
+- name: Configure Linux workstation
   hosts: workstation
   become: true
 
@@ -9,6 +9,7 @@
   roles:
     - base
     - security
+    - tailscale
 #   - server
     - gnome
 #   - rpmfusion

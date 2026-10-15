@@ -3,3 +3,18 @@
   ansible.builtin.dnf:
     name: "@virtualization"
     state: present
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Install virtualization stack on Debian
+  ansible.builtin.apt:
+    name:
+      - bridge-utils
+      - libvirt-clients
+      - libvirt-daemon-system
+      - qemu-system-x86
+      - virtinst
+      - virt-manager
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_facts['os_family'] == 'Debian'

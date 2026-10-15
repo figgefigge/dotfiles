@@ -24,16 +24,19 @@
         mode: '0644'
       notify: Reload systemd
 
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
     - name: Disable apport or kernel crash handlers if applicable
-      service:
+      ansible.builtin.service:
         name: apport
         state: stopped
         enabled: false
-      failed_when: false
+      when: "'apport.service' in ansible_facts.services"
   tags: [coredump, security, systemd]
 
 - name: Apply sysctl server hardening parameters
-  template:
+  ansible.builtin.template:
     src: 99-sysctl-hardening.conf.j2
     dest: /etc/sysctl.d/99-sysctl-hardening.conf
     owner: root

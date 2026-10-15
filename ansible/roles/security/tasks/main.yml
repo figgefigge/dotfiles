@@ -1,5 +1,5 @@
 ---
-- name: Install security packages
+- name: Install Fedora security packages
   ansible.builtin.dnf:
     name:
       - firewalld
@@ -29,6 +29,36 @@
       - usbguard-notifier
       - usbguard-dbus
     state: present
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Update Debian package cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Install Debian security packages
+  ansible.builtin.apt:
+    name:
+      - apparmor
+      - apparmor-utils
+      - auditd
+      - chrony
+      - clevis
+      - clevis-initramfs
+      - clevis-luks
+      - clevis-systemd
+      - clevis-tpm2
+      - fido2-tools
+      - firewalld
+      - fwupd
+      - libfido2-1
+      - mokutil
+      - tpm2-tools
+      - unattended-upgrades
+      - usbguard
+    state: present
+  when: ansible_facts['os_family'] == 'Debian'
 
 # ─────────────────────────────
 # Secure Boot / TPM / LUKS
@@ -100,6 +130,14 @@
   ansible.posix.selinux:
     policy: targeted
     state: enforcing
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Ensure AppArmor is enabled and running on Debian
+  ansible.builtin.service:
+    name: apparmor
+    enabled: true
+    state: started
+  when: ansible_facts['os_family'] == 'Debian'
 
 # ─────────────────────────────
 # Firewall
