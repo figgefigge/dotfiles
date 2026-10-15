@@ -147,12 +147,14 @@
   ansible.builtin.command:
     cmd: firewall-cmd --set-default-zone=public
   changed_when: false
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Ensure firewalld is enabled and running
   ansible.builtin.systemd:
     name: firewalld
     enabled: true
     state: started
+  when: ansible_facts['os_family'] == 'RedHat'
 
 # ─────────────────────────────
 # Automatic updates
