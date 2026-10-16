@@ -1,0 +1,8 @@
+---
+- name: Configure Fedora firewall
+  ansible.builtin.import_tasks: fedora.yml
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Configure Debian firewall
+  ansible.builtin.import_tasks: debian.yml
+  when: ansible_facts['distribution'] == 'Debian'

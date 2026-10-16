@@ -2,7 +2,6 @@
 - name: Install Fedora security packages
   ansible.builtin.dnf:
     name:
-      - firewalld
       - selinux-policy
       - selinux-policy-targeted
       - libselinux
@@ -50,7 +49,6 @@
       - clevis-systemd
       - clevis-tpm2
       - fido2-tools
-      - firewalld
       - fwupd
       - libfido2-1
       - mokutil
@@ -138,23 +136,6 @@
     enabled: true
     state: started
   when: ansible_facts['os_family'] == 'Debian'
-
-# ─────────────────────────────
-# Firewall
-# ─────────────────────────────
-
-- name: Set public as default firewalld zone
-  ansible.builtin.command:
-    cmd: firewall-cmd --set-default-zone=public
-  changed_when: false
-  when: ansible_facts['os_family'] == 'RedHat'
-
-- name: Ensure firewalld is enabled and running
-  ansible.builtin.systemd:
-    name: firewalld
-    enabled: true
-    state: started
-  when: ansible_facts['os_family'] == 'RedHat'
 
 # ─────────────────────────────
 # Automatic updates

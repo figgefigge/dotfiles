@@ -1,0 +1,32 @@
+---
+- name: Remove firewalld when migrating to UFW
+  ansible.builtin.package:
+    name: firewalld
+    state: absent
+
+- name: Install UFW
+  ansible.builtin.package:
+    name: ufw
+    state: present
+
+- name: Set UFW to deny incoming traffic by default
+  community.general.ufw:
+    default: deny
+    direction: incoming
+
+- name: Set UFW to allow outgoing traffic by default
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+
+- name: Allow SSH on tailscale0
+  community.general.ufw:
+    rule: allow
+    interface: tailscale0
+    direction: in
+    port: "22"
+    proto: tcp
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled

@@ -1,0 +1,51 @@
+---
+- name: Install firewalld
+  ansible.builtin.package:
+    name: firewalld
+    state: present
+
+- name: Enable and start firewalld
+  ansible.builtin.service:
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: Check the default firewalld zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --get-default-zone
+  register: firewall_default_zone
+  changed_when: false
+
+- name: Set public as the default firewalld zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --set-default-zone=public
+  when: firewall_default_zone.stdout != 'public'
+
+- name: Ensure the Tailscale firewalld zone exists
+  ansible.posix.firewalld:
+    zone: tailscale
+    state: present
+    permanent: true
+  register: firewall_tailscale_zone
+
+- name: Reload firewalld after creating the Tailscale zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --reload
+  when: firewall_tailscale_zone.changed
+  changed_when: true
+
+- name: Allow SSH in the Tailscale firewalld zone
+  ansible.posix.firewalld:
+    zone: tailscale
+    service: ssh
+    state: enabled
+    permanent: true
+    immediate: true
+
+- name: Assign tailscale0 to the Tailscale firewalld zone
+  ansible.posix.firewalld:
+    zone: tailscale
+    interface: tailscale0
+    state: enabled
+    permanent: true
+  notify: Reload firewalld
