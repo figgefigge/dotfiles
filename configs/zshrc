@@ -1,6 +1,9 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+alias ll="lsd -lh"
+alias la="lsd -lah"
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=100000
