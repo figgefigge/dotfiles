@@ -1,19 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SYSTEM_LUKS_DRIVE="/dev/nvme0n1p3"
+SYSTEM_LUKS_DRIVE="/dev/nvme1n1p3"
 BIND_TO_PCRS="1,4,5,7,9"
 
 # 1. Installera paket
 echo "Installerar Clevis..."
 sudo dnf install -y clevis clevis-luks clevis-dracut clevis-udisks2 clevis-systemd
 
-# Verifiering: kontrollera att kommandot finns
-clevis --version
-
 # 2. Binda LUKS till TPM2 (frågar efter din nuvarande LUKS-lösenfras interaktivt)
 echo "Binder ${SYSTEM_LUKS_DRIVE} till TPM2..."
-sudo clevis luks bind -d "$SYSTEM_LUKS_DRIVE" tpm2 "{\"pcr_ids\":\"${BIND_TO_PCRS}\"}"
+sudo clevis luks bind -d "$SYSTEM_LUKS_DRIVE" tpm2 "{\"hash\":\"sha256\",\"key\":\"rsa\",\"pcr_bank\":\"sha256\",\"pcr_ids\":\"${BIND_TO_PCRS}\"}"
 
 # Verifiering: lista aktiva slots/pins på enheten
 echo "Verifierar slots:"
