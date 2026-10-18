@@ -3,3 +3,9 @@ Host github.com
 	Hostname github.com
 	IdentityFile /home/figge/.ssh/id_ed25519_sk_rk_github
 	IdentityAgent none
+
+Host asus
+	User fredric
+	Hostname asus.tailc939ce.ts.net
+	IdentityFile /home/fredric/.ssh/id_ed25519_sk_rk_asus.home_fredric
+	IdentityAgent none
