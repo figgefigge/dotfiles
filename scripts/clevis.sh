@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SYSTEM_LUKS_DRIVE="/dev/nvme1n1p3"
+SYSTEM_LUKS_DRIVE="/dev/nvme0n1p3"
 BIND_TO_PCRS="1,4,5,7,9"
 
 # 1. Installera paket
