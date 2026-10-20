@@ -7,7 +7,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Peka ut var din ini-fil finns (ett steg upp till roten, sen till configs/)
-SETTINGS_FILE="$SCRIPT_DIR/../configs/gnome-settings.ini"
+SETTINGS_FILE="$SCRIPT_DIR/../gnome-settings.ini"
 
 # Kontrollera att filen finns innan vi försöker importera
 if [ ! -f "$SETTINGS_FILE" ]; then

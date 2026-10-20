@@ -12,8 +12,8 @@ sudo ufw reload
 # Check active rules
 sudo ufw status verbose
 
-echo "-----------------"
-echo "Glöm inte att ange tailscales ip-range i /etc/exports \n"
-echo "\n"
-echo "#/etc/exports Exempel\n"
-echo "/mnt/nfs/foo	100.64.0.0/10(rw)\n"
+echo "# -----------------------------------------------------"
+echo "# Glöm inte att ange tailscales ip-range i /etc/exports"
+echo "# -----------------------------------------------------"
+echo "# /etc/exports Exempel"
+echo "/mnt/nfs/foo	100.64.0.0/10(rw)"
