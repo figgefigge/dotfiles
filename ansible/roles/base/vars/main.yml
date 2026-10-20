@@ -27,3 +27,5 @@ base_packages:
   - aria2
 base_fedora_packages:
   - dnf-utils
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
