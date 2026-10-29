@@ -1,5 +1,5 @@
 # Ignorera allt i ssh som default
-.ssh/*
+ssh/.ssh/*
 
 # Förutom config
-!.ssh/config
+!ssh/.ssh/config
