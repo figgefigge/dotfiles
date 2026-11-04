@@ -1,6 +1,10 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 alias ll="lsd -lh"
 alias la="lsd -lah"
 
