@@ -71,8 +71,19 @@ ansible-playbook \
 # 
 print_step_heading "Steg 2. Länkar configs med Stow"
 
+# Säkerställ att .ssh-katalogen finns och har strikta rättigheter (700)
+# innan Stow skapar eventuella länkar inuti den.
+mkdir -p "$HOME/.ssh"
+chmod 700 "$HOME/.ssh"
+
 # -v (verbose) är bra för att se exakt vad Stow gör
 # -R (restow) ser till att länkar uppdateras korrekt om de redan finns
 stow -R -v zsh git kitty ssh
+
+# Sätt korrekta rättigheter (600) på SSH-konfigurationsfilen efter länkning
+if [ -f "$HOME/.ssh/config" ]; then
+    chmod 600 "$HOME/.ssh/config"
+    echo -e "${BLUE}Satte korrekta rättigheter (600) på ~/.ssh/config${RESET}"
+fi
 
 echo -e "\n${GREEN}✔ Installationen slutförd utan fel!${RESET}\n"
