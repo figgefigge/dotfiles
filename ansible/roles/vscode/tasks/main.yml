@@ -49,8 +49,7 @@
 - name: Install VS Code extensions
   become: false
   ansible.builtin.command:
-    cmd: "code --install-extension {{ item }}"
-  loop: "{{ vscode_extensions }}"
+    argv: "{{ ['code'] + (['--install-extension'] | product(vscode_extensions) | flatten) }}"
   when: vscode_extensions | length > 0
   register: vscode_extension_install
   changed_when: "'was successfully installed' in vscode_extension_install.stdout"

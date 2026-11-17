@@ -17,9 +17,8 @@
 
 - name: Install Flatpak applications for user
   community.general.flatpak:
-    name: "{{ item }}"
+    name: "{{ flatpak_packages }}"
     state: present
     remote: flathub
-  loop: "{{ flatpak_packages }}"
   tags:
     - flatpak
