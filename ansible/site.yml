@@ -6,6 +6,11 @@
   vars_files:
     - vars.yml
 
+  pre_tasks:
+    - name: Gather installed package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
   roles:
     - base
     - security
@@ -15,7 +20,8 @@
       when: >-
         (ansible_facts['os_family'] == 'Debian' and server_apply_to_debian) or
         (ansible_facts['os_family'] == 'RedHat' and server_apply_to_redhat)
-    - gnome
+    - role: gnome
+      when: "'gnome-shell' in ansible_facts['packages']"
     - rpmfusion
     - flatpak
     - vscode
