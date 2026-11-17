@@ -1,50 +1,46 @@
 ---
 flatpak_packages:
-  - org.strawberrymusicplayer.strawberry
-  - de.haeckerfelix.Shortwave
-  - org.videolan.VLC
-  - com.mattjakeman.ExtensionManager
-  - io.mpv.Mpv
-  - io.github.mrvladus.List
-  - io.gitlab.news_flash.NewsFlash
-  - io.gitlab.adhami3310.Converter
-  - io.gitlab.adhami3310.Impression
-  - de.wwwtech.gitte
-  - app.fotema.Fotema
   - app.drey.Dialect
-  - com.spotify.Client
+  - app.fotema.Fotema
+  - com.bitwarden.desktop
+  - com.github.qarmin.czkawka
   - com.github.tchx84.Flatseal
   - com.mattjakeman.ExtensionManager
-  - com.usebruno.Bruno
-  - com.github.qarmin.czkawka
+  - com.protonvpn.www
   - com.rafaelmardojai.Blanket
-  - de.haeckerfelix.Fragments
-  - dev.geopjr.Tuba
+  - com.spotify.Client
+  - com.usebruno.Bruno
+  - de.haeckerfelix.Shortwave
+  - de.wwwtech.gitte
   - dev.geopjr.Collision
+  - dev.geopjr.Tuba
   - im.riot.Riot
-  - io.missioncenter.MissionCenter
   - io.dbeaver.DBeaverCommunity
+  - io.github.kolunmi.Bazaar
+  - io.github.mrvladus.List
+  - io.gitlab.adhami3310.Converter
+  - io.gitlab.adhami3310.Impression
+  - io.gitlab.news_flash.NewsFlash
+  - io.gitlab.theevilskeleton.Upscaler
+  - io.missioncenter.MissionCenter
+  - io.mpv.Mpv
+  - net.mkiol.SpeechNote
   - net.nokyan.Resources
   - net.trowell.typesetter
   - net.waterfox.waterfox
-  - org.mozilla.firefox
-  - org.gimp.GIMP
-  - org.gnome.SoundRecorder
-  - org.libreoffice.LibreOffice
-  - org.signal.Signal
-  - org.keepassxc.KeePassXC
-  - org.gnome.World.PikaBackup
   - org.gaphor.Gaphor
-  - org.pgadmin.pgadmin4
+  - org.gimp.GIMP
   - org.gnome.Builder
+  - org.gnome.SoundRecorder
+  - org.gnome.World.PikaBackup
   - org.gnome.design.Contrast
   - org.gustavoperedo.FontDownloader
-  - re.sonny.Junction
-  - org.jellyfin.JellyfinServer
-  - org.telegram.desktop
+  - org.keepassxc.KeePassXC
+  - org.libreoffice.LibreOffice
+  - org.mozilla.firefox
+  - org.pgadmin.pgadmin4
+  - org.qbittorrent.qBittorrent
   - org.signal.Signal
-  - com.protonvpn.www
-  - io.github.kolunmi.Bazaar
-  - com.bitwarden.desktop
-  - net.mkiol.SpeechNote
-  - io.gitlab.theevilskeleton.Upscaler
+  - org.strawberrymusicplayer.strawberry
+  - org.telegram.desktop
+  - org.videolan.VLC
