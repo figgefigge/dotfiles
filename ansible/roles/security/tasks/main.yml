@@ -58,13 +58,19 @@
     state: present
   when: ansible_facts['os_family'] == 'Debian'
 
-- name: Set secure user umask in login.defs
-  ansible.builtin.lineinfile:
-    path: /etc/login.defs
-    regexp: '^\s*UMASK\s+'
-    line: UMASK 0027
-  when: ansible_facts['os_family'] in ['RedHat', 'Debian']
-  tags: [security, umask]
+# Umask i /etc/login.defs skapade problem med delade libs i /usr/local/
+# som installerades med cmake som root.
+# Min användare kunde inte läsa bibloteken. Har inte root separat umask från sudo?
+#
+# TODO: Testa umask 027 i .profile/.zshrc istället. Behövs egentligen bara på server som har flera anv.
+#
+# name: Set secure user umask in login.defs
+# ansible.builtin.lineinfile:
+#   path: /etc/login.defs
+#   regexp: '^\s*UMASK\s+'
+#   line: UMASK 0027
+# when: ansible_facts['os_family'] in ['RedHat', 'Debian']
+# tags: [security, umask]
 
 # ─────────────────────────────
 # Secure Boot / TPM / LUKS
