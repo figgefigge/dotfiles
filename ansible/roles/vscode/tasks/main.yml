@@ -18,12 +18,28 @@
   when: ansible_facts['os_family'] == 'Debian'
 
 - name: Add Microsoft VS Code repository on Debian
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/code stable main"
-    filename: vscode
+  ansible.builtin.deb822_repository:
+    name: vscode
+    types: deb
+    uris: "https://packages.microsoft.com/repos/code"
+    suites: stable
+    components:
+      - main
+    architectures:
+      - amd64
+      - arm64
+      - armhf
+    signed_by: /etc/apt/trusted.gpg.d/microsoft.asc
     state: present
-    update_cache: true
+  register: vscode_repository
   when: ansible_facts['os_family'] == 'Debian'
+
+- name: Update apt cache after adding VS Code repository
+  ansible.builtin.apt:
+    update_cache: true
+  when:
+    - ansible_facts['os_family'] == 'Debian'
+    - vscode_repository.changed
 
 - name: Install VS Code
   ansible.builtin.package:

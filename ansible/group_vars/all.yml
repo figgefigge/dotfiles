@@ -1,0 +1,10 @@
+---
+require_secure_boot: true
+require_tpm: false
+require_luks: true
+usbguard_enabled: true
+
+server_systemd_mask_sleep_targets: true
+server_enable_coredumps: false
+server_apply_to_debian: true
+server_apply_to_redhat: false

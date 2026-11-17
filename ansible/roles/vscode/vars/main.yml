@@ -1,12 +1,18 @@
 ---
 vscode_extensions:
-  - redhat.ansible
-  - formulahendry.auto-rename-tag
-  - oderwat.indent-rainbow
-  - esbenp.prettier-vscode
-  - ms-vscode-remote.remote-ssh
-  - svelte.svelte-vscode
   - bradlc.vscode-tailwindcss
-  - vscodevim.vim
+  - dbaeumer.vscode-eslint
+  - eamodio.gitlens
+  - esbenp.prettier-vscode
+  - formulahendry.auto-rename-tag
+  - golang.go
+  - mechatroner.rainbow-csv
+  - ms-azuretools.vscode-docker
+  - ms-vscode-remote.remote-ssh
+  - oderwat.indent-rainbow
+  - pkief.material-icon-theme
+  - redhat.ansible
   - redhat.vscode-xml
   - redhat.vscode-yaml
+  - svelte.svelte-vscode
+  - vscodevim.vim

@@ -1,0 +1,10 @@
+# /etc/ssh/sshd_config
+# Hanterad av Ansible (dotfiles/roles/security/templates/99-ssh-hardening.conf.j2)
+
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+ChallengeResponseAuthentication no
+KbdInteractiveAuthentication no
+X11Forwarding no
+MaxAuthTries 3

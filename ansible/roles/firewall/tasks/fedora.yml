@@ -20,6 +20,7 @@
   ansible.builtin.command:
     cmd: firewall-cmd --set-default-zone=public
   when: firewall_default_zone.stdout != 'public'
+  changed_when: true
 
 - name: Ensure the Tailscale firewalld zone exists
   ansible.posix.firewalld:
@@ -27,12 +28,7 @@
     state: present
     permanent: true
   register: firewall_tailscale_zone
-
-- name: Reload firewalld after creating the Tailscale zone
-  ansible.builtin.command:
-    cmd: firewall-cmd --reload
-  when: firewall_tailscale_zone.changed
-  changed_when: true
+  notify: Reload firewalld
 
 - name: Allow SSH in the Tailscale firewalld zone
   ansible.posix.firewalld:

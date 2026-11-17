@@ -1,4 +1,4 @@
-rpmfusion_fedora_version: 44
+rpmfusion_fedora_version: 45
 rpmfusion_packages:
   - intel-media-driver
   - libva-nvidia-driver
@@ -6,4 +6,3 @@ rpmfusion_packages:
   - gstreamer1-plugins-ugly
   - libavcodec-freeworld
   - libheif-freeworld
-  - motion

@@ -18,12 +18,24 @@
   when: ansible_facts['distribution'] == 'Debian'
 
 - name: Add Tailscale repository on Debian
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian {{ ansible_facts['distribution_release'] }} main"
-    filename: tailscale
+  ansible.builtin.deb822_repository:
+    name: tailscale
+    types: deb
+    uris: "https://pkgs.tailscale.com/stable/debian"
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components:
+      - main
+    signed_by: /usr/share/keyrings/tailscale-archive-keyring.gpg
     state: present
-    update_cache: true
+  register: tailscale_repository
   when: ansible_facts['distribution'] == 'Debian'
+
+- name: Update apt cache after adding Tailscale repository
+  ansible.builtin.apt:
+    update_cache: true
+  when:
+    - ansible_facts['distribution'] == 'Debian'
+    - tailscale_repository.changed
 
 - name: Install Tailscale
   ansible.builtin.package:

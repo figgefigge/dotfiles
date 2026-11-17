@@ -1,22 +1,23 @@
 ---
 - name: Configure system sleep and power management states
+  tags: [power, systemd]
   block:
     - name: Mask sleep and suspend targets in systemd
-      systemd:
+      ansible.builtin.systemd:
         name: "{{ item }}"
-        masked: "{{ not server_enable_sleep }}"
+        masked: "{{ server_systemd_mask_sleep_targets }}"
       loop:
         - sleep.target
         - suspend.target
         - hibernate.target
         - hybrid-sleep.target
       notify: Reload systemd
-  tags: [power, systemd]
 
 - name: Configure systemd coredump settings
+  tags: [coredump, security, systemd]
   block:
     - name: Template coredump.conf
-      template:
+      ansible.builtin.template:
         src: coredump.conf.j2
         dest: /etc/systemd/coredump.conf
         owner: root
@@ -33,7 +34,6 @@
         state: stopped
         enabled: false
       when: "'apport.service' in ansible_facts.services"
-  tags: [coredump, security, systemd]
 
 - name: Apply sysctl server hardening parameters
   ansible.builtin.template:

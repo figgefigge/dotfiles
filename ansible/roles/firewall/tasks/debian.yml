@@ -1,9 +1,4 @@
 ---
-- name: Remove firewalld when migrating to UFW
-  ansible.builtin.package:
-    name: firewalld
-    state: absent
-
 - name: Install UFW
   ansible.builtin.package:
     name: ufw

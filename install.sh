@@ -78,7 +78,7 @@ chmod 700 "$HOME/.ssh"
 
 # -v (verbose) är bra för att se exakt vad Stow gör
 # -R (restow) ser till att länkar uppdateras korrekt om de redan finns
-stow -R -v zsh git kitty ssh
+stow -d stow -t "$HOME" -R -v zsh git kitty ssh
 
 # Sätt korrekta rättigheter (600) på SSH-konfigurationsfilen efter länkning
 if [ -f "$HOME/.ssh/config" ]; then

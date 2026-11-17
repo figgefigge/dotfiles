@@ -1,0 +1,17 @@
+# /etc/sysctl.d/99-security.conf
+# Hanterad av Ansible (dotfiles/roles/security/templates/99-sysctl-hardening.conf.j2)
+
+# Stäng av Magic SysRq helt
+kernel.sysrq = 0
+
+# Skydda mot symlink/hardlink-attacker
+fs.protected_symlinks = 1
+fs.protected_hardlinks = 1
+fs.protected_fifos = 2
+fs.protected_regular = 2
+
+# Slå på kexec-blockering (förhindrar att en angripare laddar en egen kärna)
+kernel.kexec_load_disabled = 1
+
+# Begränsa core dump läslighet
+fs.suid_dumpable = 0
