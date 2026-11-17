@@ -2,6 +2,7 @@
 flatpak_packages:
   - app.drey.Dialect
   - app.fotema.Fotema
+  - app.zen_browser.zen
   - com.bitwarden.desktop
   - com.github.qarmin.czkawka
   - com.github.tchx84.Flatseal
